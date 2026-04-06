@@ -72,20 +72,25 @@ SynthDef(\asa_continuity, {
 // Playing Tone A first "captures" it out of the following A+B chord.
 SynthDef(\asa_capture, {
     arg out=0, freqA=440, freqB=660, amp=0.1, gate=1, capture=1;
-    var sigA, sigB, envA, envB;
+    var sigA, sigB, envA, envB, mask;
     
-    // Tone A starts at 0s
+    // Tone A: starts at 0
     sigA = SinOsc.ar(freqA);
-    envA = EnvGen.ar(Env([0, 1, 1, 0], [0.1, 1.8, 0.1]), gate, doneAction: 2);
+    envA = EnvGen.ar(Env.asr(0.1, 1, 0.1), gate, doneAction: 2);
     
-    // Tone B starts at 1s
+    // Tone B: starts at 1.0s
     sigB = SinOsc.ar(freqB);
-    envB = EnvGen.ar(Env([0, 0, 1, 0], [1.0, 0.1, 0.8, 0.1]), gate);
+    envB = EnvGen.ar(Env([0, 0, 1], [1.0, 0.1], \lin), gate);
     
-    // If capture is 0, we don't play the lead-in for A
-    sigA = sigA * envA * (if(capture > 0, {1}, {LFPulse.kr(0, 0, 0, 0, 1)} /* simplified logic */));
+    // Mask for A: 
+    // If capture=1: 1 (full A lead-in)
+    // If capture=0: starts at 1.0s (no lead-in, starts with B)
+    mask = Select.kr(capture, [
+        EnvGen.kr(Env([0, 0, 1], [1.0, 0.01], \lin), gate),
+        1
+    ]);
     
-    Out.ar(out, ((sigA + (sigB * envB)) * amp).dup);
+    Out.ar(out, ((sigA * envA * mask) + (sigB * envB)).dup * amp);
 }).add;
 
 // 6. Crossing Trajectories (Demo 17)
