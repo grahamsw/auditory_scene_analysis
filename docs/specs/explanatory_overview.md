@@ -1,0 +1,3 @@
+add a page to the web app that serves as a landing page. I will provide a couple of paragraphs of explanatory text, and  link to Bergmann's archive site, explaining what thhese demos are about - possibly linking it to the theory of internal models as what we sense (Seth's perception = hallucination theory)
+
+I might ask you to format it all later, for noww provide somme ipso text for a heading, subhead and 2 par
