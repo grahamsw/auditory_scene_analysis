@@ -1,0 +1,40 @@
+# Node modules
+node_modules/
+**/node_modules/
+
+# Build output
+dist/
+**/dist/
+build/
+**/build/
+.vite/
+**/.vite/
+
+# Generated caches
+*.tsbuildinfo
+
+# Runtime files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+*.log
+
+# Editors
+.vscode/
+.idea/
+
+# Environment
+.env
+.env.*
+
+# Coverage
+coverage/
+
+# Misc
+*.tmp
+*.temp
